@@ -1,36 +1,30 @@
 package cat.itacademy.barcelonactiva.fedoraeva.anna.s04.t01.n01.S04T01N01FedoraevaAnna.controllers;
 
-	import org.springframework.web.bind.annotation.GetMapping;
-	import org.springframework.web.bind.annotation.PathVariable;
-	import org.springframework.web.bind.annotation.RequestMapping;
-	import org.springframework.web.bind.annotation.RequestMethod;
-	import org.springframework.web.bind.annotation.RequestParam;
-	import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-	@RestController
-	public class HelloWorldController {
-		
-		//@GetMapping("/HelloWorld")
-		@RequestMapping(value = "/HelloWorld", method = RequestMethod.GET)
-		public String saluda(@RequestParam (defaultValue = "UNKNOWN") String nom) {
-			return "Hola, " + nom + ". Est‡s executant un projecte Maven.";
-		}
-		
-		
-		//@GetMapping(value = {"/HelloWorld2", "/HelloWorld2/{nom}"})
-		@RequestMapping(value = {"/HelloWorld2", "/HelloWorld2/{nom}"})
-		public String saluda2(@PathVariable(required = false) String nom) {
-			String string;
-			if (nom != null) {
-				string = "Hola, " + nom + ". Est‡s executant un projecte Maven.";
-			}else {
-				string = "Hola. Est‡s executant un projecte Maven.";
-			}
-			return string;
-		}
-		
-		
+@RestController
+public class HelloWorldController {
+
+	@RequestMapping(value = "/HelloWorld", method = RequestMethod.GET)
+	public ResponseEntity<?> saluda(@RequestParam(defaultValue = "UNKNOWN") String nom) {
+		return new ResponseEntity<>("Hola, " + nom + ". Est√†s executant un projecte Gradle.", HttpStatus.OK);
 
 	}
 
+	@RequestMapping(value = { "/HelloWorld2", "/HelloWorld2/{nom}" })
+	public ResponseEntity<?> saluda2(@PathVariable(required = false) String nom) {
+		if (nom != null) {
+			return new ResponseEntity<>("Hola, " + nom + ". Est√†s executant un projecte Gradle.", HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>("Hola. Est√†s executant un projecte Gradle.", HttpStatus.OK);
+		}
+	}
+
+}
 
